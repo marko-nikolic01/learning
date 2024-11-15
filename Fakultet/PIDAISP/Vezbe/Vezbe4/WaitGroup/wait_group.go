@@ -22,4 +22,4 @@ func main() {
 	waitGroup.Wait()
 
 	fmt.Println("All Go routines completed")
-}
+} 
