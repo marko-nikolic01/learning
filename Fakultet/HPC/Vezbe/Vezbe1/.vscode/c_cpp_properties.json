@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/lib/gcc/x86_64-linux-gnu/*/include/**"
+                "/usr/lib/gcc/x86_64-linux-gnu/*/include/**",
+                "/usr/lib/gcc/x86_64-linux-gnu/14/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang-19",
