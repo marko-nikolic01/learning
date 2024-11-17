@@ -75,10 +75,18 @@ int main(int argc, char *argv[]) {
     head = p;
     start = omp_get_wtime();
 
-    {  // TODO paralelizujete izvrsavanje ove petlje
-        while (p != NULL) {
-            processwork(p);
-            p = p->next;
+    #pragma omp parallel
+    {  
+        #pragma omp single
+        {
+            while (p != NULL) {
+                { 
+                    #pragma omp task firstprivate(p)
+                    processwork(p);
+                }
+
+                p = p->next;
+            }
         }
     }
     end = omp_get_wtime();
