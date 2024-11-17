@@ -24,12 +24,15 @@ int main(int argc, char* argv[]) {
     /**
      * 1. TODO: Inicijalizovati MPI aplikaciju.
     */
+   MPI_Init(&argc, &argv);
 
     /**
      * 2. TODO: Pribaviti rank u svetskom komunikatoru i smestiti ga 
      * u promenljivu "svetski_rank"
     */
     int svetski_rank;
+
+    MPI_Comm_rank(MPI_COMM_WORLD, &svetski_rank);
 
 
     /**
@@ -50,6 +53,24 @@ int main(int argc, char* argv[]) {
      *  - kreirati komunikator od grupe (MPI_Comm_create_group)
      * 
     */
+
+   MPI_Group svetska_grupa;
+   MPI_Comm_group(MPI_COMM_WORLD, &svetska_grupa);
+
+   int prva_partija[VELICINA_PRVA] = PRVA_PARTIJA;
+   MPI_Group partija_1;
+   MPI_Group_incl(svetska_grupa, VELICINA_PRVA, prva_partija, &partija_1);
+
+   
+   int druga_partija[VELICINA_DRUGA] = DRUGA_PARTIJA;
+   MPI_Group partija_2;
+   MPI_Group_incl(svetska_grupa, VELICINA_DRUGA, druga_partija, &partija_2);
+
+    MPI_Group koalicija;
+    MPI_Group_union(partija_2, partija_1, &koalicija)
+
+    MPI_Comm koalicija_komunikator;
+    MPI_Comm_create_group(MPI_COMM_WORLD, koalicija, 0, &koalicija_komunikator);
 
     /**
      * 4. TODO: Napisati deo koda koji će izvršavati samo procesi koji pripadaju
@@ -85,4 +106,6 @@ int main(int argc, char* argv[]) {
     /**
      * 6. TODO: Pozvati funkciju za završetak MPI programa.
     */
+
+   MPI_Finalize();
 }
