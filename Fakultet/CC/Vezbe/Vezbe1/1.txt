@@ -1,0 +1,6 @@
+sudo docker images
+sudo docker pull hello-world
+sudo docker run --name hello-world hello-world
+sudo docker ps
+sudo docker ps --filter "name=hello-world" (sudo docker inspect hello-world)
+sudo docker rmi hello-world
