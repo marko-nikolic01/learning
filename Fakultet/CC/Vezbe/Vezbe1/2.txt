@@ -1,0 +1,6 @@
+sudo docker pull ubuntu:18.04
+sudo docker run -it --name primer ubuntu:18.04
+mkdir /primer
+sudo docker ps
+sudo docker stop primer
+sudo docker rm primer
