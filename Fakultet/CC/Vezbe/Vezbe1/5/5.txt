@@ -1,0 +1,4 @@
+sudo docker ps --all
+sudo docker ps -all --format "{{.ID}} \t {{.Image}} \t {{.Names}} \t {{.Status}}"
+sudo docker container prune
+sudoe docker image prune -a
