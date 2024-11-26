@@ -1,0 +1,5 @@
+sudo docker build -t primer .
+sudo docker run --name igrica -it primer
+sudo docker stop igrica
+sudo docker run --name igrica2 --rm -it primer
+sudo docker rmi -f primer
