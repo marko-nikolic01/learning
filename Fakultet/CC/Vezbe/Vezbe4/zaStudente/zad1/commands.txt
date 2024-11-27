@@ -1,0 +1,11 @@
+docker network create zad1
+
+docker run --name mongodb --network zad1 --rm -v data:/data/db -d mongodb
+
+docker build -t back:zad1 .
+docker run --name backend --network zad1 --rm -p 8001:8001 -v logs:/app/logs -v "$(pwd):/app" -v /app/node_modules back:zad1
+
+docker build -t front:zad1 .
+docker run --name frontend -v "$(pwd)/src:/app/src" --rm -p 3000:3000 -it front:zad1
+
+docker stop mongodb backend frontend

@@ -1,0 +1,9 @@
+docker network create zad11
+
+docker run --name mongodb --network zad11 -v "$(pwd)/zadatak/data:/data/db" -d --rm mongo
+
+docker build -t backend:zad11 .
+docker run --name backend --network zad11 --rm -p 80:80 -v logs:/app/logs -v "$(pwd):/app" -v /app/node_modules backend:zad11
+
+docker build -t frontend:zad11 .
+docker run --name frontend -p 3000:3000 -v "$(pwd)/public:/app/public" --rm frontend:zad11

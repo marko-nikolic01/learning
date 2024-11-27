@@ -1,0 +1,31 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - "./zadatak/data:/app/var/lib/postgresql/data"
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      - postgres
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./public:/app/public
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+
+      
+      

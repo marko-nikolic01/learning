@@ -1,0 +1,40 @@
+#kreiranje mreze
+docker network create zad1
+
+#pokretanje kontejnera za bazu podataka
+docker run \
+--name mongodb \
+--network zad1 \
+--rm \
+-v data:/data/db \
+-d \
+mongo
+
+#kreiranje slike za nodejs aplikaciju
+docker build . -t back:zad1
+
+#pokretanje nodejs kontejnera na osnovu kreirane slike
+docker run \
+--name backend \
+--rm \
+--network zad1 \
+-p 8001:8001 \
+-v logs:/app/logs \
+-v "$(pwd):/app" \
+-v /app/node_modules  \
+back:zad1
+
+#kreiranje slike za react aplikaciju
+docker build . -t front:zad1
+
+#pokretanje react kontejnera na osnovu kreiranje slike
+docker run \
+--name frontend \
+-v "$(pwd)/src:/app/src" \
+--rm \
+-p 3000:3000 \
+-it \
+front:zad1
+
+#zaustavljanje pokrenutih kontejnera
+docker stop mongodb backend frontend

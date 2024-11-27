@@ -1,0 +1,9 @@
+docker network create zad2
+
+docker run --network zad2 --name postgres -e POSTGRES_PASSWORD=super -v "$(pwd)/zadatak/data:/app/var/lib/postgresql/data" --rm postgres
+
+docker build -t back:zad2 .
+docker run --network zad2 --name backend -p 8081:8081 --rm back:zad2
+
+docker build -t front:zad2 .
+docker run --name frontend -v "$(pwd)/public:/app/public" -p 3000:3000 --rm front:zad2
